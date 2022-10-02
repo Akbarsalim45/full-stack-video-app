@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import {Link} from 'react-router-dom'
 import logo from '../images/logo.png'
 import HomeIcon from '@mui/icons-material/Home';
 import ExploreIcon from '@mui/icons-material/Explore';
@@ -22,8 +23,10 @@ const Container = styled.div`
     font-size:14px;
     height:100%
     ;
-    color:white;
-    background-color:#202020;
+    color:${({theme})=>theme.text};
+    background-color:${({theme})=>theme.bgLighter};
+    position:sticky;
+    top:0;
 `
 const Wrapper =styled.div`
     padding:18px 26px
@@ -48,7 +51,7 @@ const Item =styled.div`
 `   
 const Hr =styled.hr`
     margin:15px 0px;
-    border:0.5px solid #373737
+    border:0.5px solid ${({theme})=>theme.soft};
 `
 const Login =styled.div``
 const Button =styled.button`
@@ -64,14 +67,16 @@ const Button =styled.button`
     gap:10px;
     cursor:pointer;
 `
-const Menu = () => {
+const Menu = ({ setDarkMode }) => {
   return (
     <Container>
       <Wrapper>
-        <Logo>
-          <Img src={logo} />
-          AKZ MEDIA
-        </Logo>
+        <Link to='/' style={{textDecoration:'none',color:'inherit'}}>
+          <Logo>
+            <Img src={logo} />
+            AKZ MEDIA
+          </Logo>
+        </Link>
         <Item>
           <HomeIcon/>
           Home
@@ -136,7 +141,7 @@ const Menu = () => {
           <HelpCenterOutlinedIcon/>
           Help
         </Item>
-        <Item>
+        <Item onClick={()=>setDarkMode(prev => !prev) }>
           <LightModeOutlinedIcon/>
           Light Mode
         </Item>
