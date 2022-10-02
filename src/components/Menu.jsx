@@ -67,7 +67,7 @@ const Button =styled.button`
     gap:10px;
     cursor:pointer;
 `
-const Menu = ({ setDarkMode }) => {
+const Menu = ({ setDarkMode,darkMode }) => {
   return (
     <Container>
       <Wrapper>
@@ -143,7 +143,7 @@ const Menu = ({ setDarkMode }) => {
         </Item>
         <Item onClick={()=>setDarkMode(prev => !prev) }>
           <LightModeOutlinedIcon/>
-          Light Mode
+          {darkMode? "Dark":"Light"} Mode
         </Item>
 
       </Wrapper>
