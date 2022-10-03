@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import logo from '../images/logo.png'
 import HomeIcon from '@mui/icons-material/Home';
-import ExploreIcon from '@mui/icons-material/Explore';
+import ExploreIcon from '@mui/icons-material/Explore';``
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import HistoryIcon from '@mui/icons-material/History';
@@ -105,7 +105,9 @@ const Menu = ({ setDarkMode,darkMode }) => {
         <Hr />
         <Login >
             Login in to like videos,comment, and subscribe
-          <Button><PersonIcon /> SIGN IN</Button>
+          <Link to='signin' style={{textDecoration:'none'}}>
+            <Button><PersonIcon /> SIGN IN</Button>
+          </Link>
         </Login>
         <Hr />
         <Item>
