@@ -5,6 +5,7 @@ import ThumbDownOutlinedIcon from '@mui/icons-material/ThumbDownOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import channelImage from '../images/avathar.jpg'
+import {Comments,Card}from '../components'
 const Container =styled.div`
     display:flex;
     gap:24px;
@@ -18,7 +19,7 @@ const VideoWrapper = styled.div``
 
 const Title=styled.h1`
     font-size:18px;
-    sont-weight:400;
+    font-weight:400;
     margin-top:20px;
     margin-bottom:10px;
     color:${({theme}) => theme.text}
@@ -105,7 +106,7 @@ const Video = () => {
     <Container>
         <Content>
             <VideoWrapper>
-            <iframe width="100%" height="720" src="https://www.youtube.com/embed/FHTbsZEJspU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="100%" height="720" src="https://www.youtube.com/embed/FHTbsZEJspU" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
             </VideoWrapper>
             <Title>test video</Title>
             <Details>
@@ -129,8 +130,25 @@ const Video = () => {
                 </ChannelInfo>
                 <Subscribe>Subscribe</Subscribe>
             </Channel>
+            <Hr />
+            <Comments />
         </Content>
-        <Recommendation>recomendation</Recommendation>
+        <Recommendation>
+            <Card type='sm' />
+            <Card type='sm' />
+            <Card type='sm' />
+            <Card type='sm' />
+            <Card type='sm' />
+            <Card type='sm' />
+            <Card type='sm' />
+            <Card type='sm' />
+            <Card type='sm' />
+            <Card type='sm' />
+            <Card type='sm' />
+            <Card type='sm' />
+            <Card type='sm' />
+            <Card type='sm' />
+        </Recommendation>
     </Container>
   )
 }

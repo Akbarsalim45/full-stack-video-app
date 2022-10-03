@@ -21,7 +21,7 @@ import PersonIcon from '@mui/icons-material/Person';
 const Container = styled.div`
     flex:1;
     font-size:14px;
-    height:100%
+    height:100vh;
     ;
     color:${({theme})=>theme.text};
     background-color:${({theme})=>theme.bgLighter};
@@ -48,6 +48,10 @@ const Item =styled.div`
     gap:20px;
     cursor:pointer;
     padding:7px 0px;
+
+    &:hover{
+        background-color:${({theme})=>theme.soft};
+       }
 `   
 const Hr =styled.hr`
     margin:15px 0px;
