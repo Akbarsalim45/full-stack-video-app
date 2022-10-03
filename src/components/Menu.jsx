@@ -21,12 +21,15 @@ import PersonIcon from '@mui/icons-material/Person';
 const Container = styled.div`
     flex:1;
     font-size:14px;
-    height:100vh;
-    ;
+    height:100vh ;
     color:${({theme})=>theme.text};
     background-color:${({theme})=>theme.bgLighter};
     position:sticky;
     top:0;
+    overflow:auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
 `
 const Wrapper =styled.div`
     padding:18px 26px
@@ -105,7 +108,7 @@ const Menu = ({ setDarkMode,darkMode }) => {
         <Hr />
         <Login >
             Login in to like videos,comment, and subscribe
-          <Link to='signin' style={{textDecoration:'none'}}>
+          <Link to='login' style={{textDecoration:'none'}}>
             <Button><PersonIcon /> SIGN IN</Button>
           </Link>
         </Login>

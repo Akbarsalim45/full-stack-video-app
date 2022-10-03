@@ -64,7 +64,7 @@ const Navbar = () => {
           <Input placeholder="search" />
           <SearchOutlinedIcon />
         </Search>
-        <Link to='signin' style={{textDecoration:'none'}}>
+        <Link to='login' style={{textDecoration:'none'}}>
           <Button ><PersonIcon /> SIGN IN</Button>
         </Link>
       </Wrapper>
