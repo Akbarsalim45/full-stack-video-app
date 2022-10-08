@@ -20,11 +20,11 @@ const UserScheme = new mongoose.Schema({
     img:{
         type:String
     },
-    subsribers:{
+    subscribers:{
         type:Number,
         default:0
     },
-    subscribedUers:{
+    subscribedUsers:{
         type:[String]
     },
 
