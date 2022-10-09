@@ -1,8 +1,12 @@
-import React from 'react'
+import React,{useState} from 'react'
 import styled from 'styled-components'
 import PersonIcon from '@mui/icons-material/Person';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import VideoCallIcon from '@mui/icons-material/VideoCall';
 import  {Link} from 'react-router-dom'
+import {useSelector} from 'react-redux'
+import Upload from './Upload';
+
 const Container = styled.div`
     position:sticky;
     top:0;
@@ -57,18 +61,26 @@ const Button =styled.button`
 `
 const Navbar = () => {
 
+    const {currentUser} = useSelector( state=> state.user)
+    const [open,setOpen] =useState(false)
   return (
+    <>
     <Container>
       <Wrapper>
         <Search>
           <Input placeholder="search" />
           <SearchOutlinedIcon />
         </Search>
+        <VideoCallIcon onClick={()=>setOpen(true)} />
         <Link to='login' style={{textDecoration:'none'}}>
-          <Button ><PersonIcon /> SIGN IN</Button>
+          <Button ><PersonIcon /> {currentUser?.name}</Button>
         </Link>
       </Wrapper>
     </Container>
+    {
+      open && <Upload  setOpen={setOpen} />
+    }
+    </>
   )
 }
 

@@ -32,9 +32,7 @@ export const signIn = async (req,res,next) => {
        
        const token = jwt.sign({id:user._id},process.env.JWT_SECRET)
        
-       res.cookie('access_token',token,{
-        httpOnly:true
-       }).status(200).json(otherDetails)
+       res.status(200).json({token,...otherDetails})
 
     }catch(err){
         next( err)

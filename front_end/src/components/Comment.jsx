@@ -1,6 +1,8 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import styled from 'styled-components'
 import avatar from '../images/avathar.jpg'
+import {format} from 'timeago.js'
+import {Axios} from '../axios/axios'
 const Container = styled.div`
     display:flex;
     gap: 10px;
@@ -31,13 +33,27 @@ const Text = styled.span`
     font-size: 14px;
     color:${({theme}) => theme.text} ;
 `
-const Comment = () => {
+const Comment = ({comment}) => {
+
+    const [commentUser,setCommentUser] = useState({})
+
+    useEffect(() => {
+    
+        const fetchData=async()=>{
+            const {data} = await Axios.get(`/users/${comment?.userId}`)
+            console.log("comemtttt",data)
+            setCommentUser(data)
+        }
+        fetchData()
+    }, [comment])
+    
+    
   return (
     <Container>
         <Avatar src={avatar} />
         <Details>
-            <Name>Akz <Date>1 day ago</Date> </Name>
-            <Text>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam tenetur consequatur velit, sapiente debitis quia dolorem! Quo vero, aperiam eius pariatur nostrum doloremque consectetur culpa aliquid nisi repellat quis minus!</Text>
+            <Name>{commentUser?.name}<Date>{format(comment?.createdAt)}</Date> </Name>
+            <Text>{comment.desc}</Text>
         </Details>
     </Container>
   )

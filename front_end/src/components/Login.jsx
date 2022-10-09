@@ -1,6 +1,9 @@
-import React from 'react'
+import React,{useState} from 'react'
 import styled from 'styled-components'
-
+import {Axios } from '../axios/axios'
+import {useDispatch} from 'react-redux'
+import { loginStart,loginSuccess,loginFail } from '../redux/userSlice'
+import {useNavigate} from 'react-router-dom'
 const Container = styled.div`
     display: flex;
     flex-direction:column;
@@ -57,14 +60,35 @@ const Link = styled.span`
 `
 
 const Login = () => {
+
+  const [email,setEmail] = useState('')
+  const [password,setPassword] = useState('')
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const handleSignin = async(e) => {
+    e.preventDefault()
+      dispatch(loginStart())
+    try{
+      const {data} = await Axios.post('auth/signin',{email,password})
+      dispatch(loginSuccess(data))
+      localStorage.setItem('access-token',data.token)
+      navigate('/')
+      console.log(data)
+
+    }catch(e){
+      dispatch(loginFail())
+      console.log(e)
+    }
+  }
+
   return (
     <Container>
       <Wrapper>
         <Title>Sign in</Title>
         <SubTitle>to continue to akz media</SubTitle>
-        <Input placeholder='username' />
-        <Input type='password' placeholder='password' />
-        <Button>Sign in</Button>
+        <Input placeholder='username' onChange ={e=>setEmail(e.target.value)} value={email} />
+        <Input type='password' placeholder='password' onChange ={e=>setPassword(e.target.value)} value={password} />
+        <Button onClick= {handleSignin} >Sign in</Button>
         <Title>or</Title>
         <Title>Sign up</Title>
         <Input placeholder='username' />

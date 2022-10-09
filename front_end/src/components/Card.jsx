@@ -1,8 +1,11 @@
-import React from 'react'
+import React,{useState,useEffect}from 'react'
 import styled from 'styled-components'
 import thumbnail from '../images/thumbnail.jpg'
 import channelImage from '../images/avathar.jpg'
 import {Link} from 'react-router-dom'
+import {format} from 'timeago.js'
+import {Axios} from '../axios/axios'
+
 const Container=styled.div`
         width:${props => props.type !=='sm' && '360px'};
         margin-bottom:${(props) => props.type === 'sm' ?'10px':'45px'};
@@ -51,18 +54,33 @@ const  Info = styled.div`
     color:${({theme}) => theme.textSoft} ;
 `
 
-const Card = ({type}) => {
+const Card = ({type,video}) => {
+    const [channel,setChannel] = useState({})
+
+    useEffect(()=>{
+        try{
+            const fetchChanel= async()=>{
+                const {data} = await Axios.get(`users/${video?.userId}`)
+                setChannel(data)
+                console.log(data)
+            }
+            fetchChanel()
+        }catch(e){
+            console.log(e)
+        }
+        
+      },[video?.userId])
   return (
     <Container type= {type}>
-        <Link to='/video/test'>
+        <Link to={`/video/${video?._id}`}>
             <Img src={thumbnail} type= {type} />
         </Link>
         <Details type= {type}>
             <ChannelImg src={channelImage} type={type} />
             <Text>
-                <Title>Test video</Title>
-                <ChannelName>Akz Media</ChannelName>
-                <Info>660,908 views - 1 day ago</Info>
+                <Title>{video?.title}</Title>
+                <ChannelName>{channel?.name}</ChannelName>
+                <Info>{video?.views} views - {format(video?.createdAt)}</Info>
             </Text>
         </Details>
     </Container>

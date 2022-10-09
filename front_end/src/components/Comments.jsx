@@ -1,8 +1,10 @@
-import React from 'react'
+import React,{useState} from 'react'
 import styled from 'styled-components'
 import avatar from '../images/avathar.jpg'
 import {Comment} from '../components'
-
+import { useSelector,useDispatch} from 'react-redux'
+import {Axios} from '../axios/axios'
+import { addComment } from '../redux/commentSlice'
 const Container = styled.div`
 
 `
@@ -27,19 +29,29 @@ const Input = styled.input`
     width:100%;
 `
 
-const Comments = () => {
+const Comments = ({currentUser,videoDetails}) => {
+
+  const {comments} = useSelector(state=> state.comment)
+  const [comment,setComment] = useState('')
+  const dispatch = useDispatch()
+  const handleAddComment = async(e)=>{
+    console.log(e.key)
+    if(e.key == "Enter"){
+      await Axios.post(`comments`,{userId:currentUser._id , videoId:videoDetails._id,desc:comment})
+      dispatch(addComment({userId:currentUser._id , videoId:videoDetails._id,desc:comment}))
+      setComment("")
+    }
+  }
   return (
     <Container>
-        <NewComment>
+        <NewComment onKeyDown={handleAddComment}>
             <Avatar src={avatar} />
-            <Input placeholder='Add a comment...'/> 
-            </NewComment>
-            <Comment /> 
-            <Comment /> 
-            <Comment /> 
-            <Comment /> 
-            <Comment /> 
-            <Comment /> 
+            <Input placeholder='Add a comment...' onChange={e => setComment(e.target.value)} value={comment}  /> 
+        </NewComment>
+        {
+          comments.map( com => <Comment key={com._id} comment={com} />)
+        }
+            
     </Container>
   )
 }

@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
+import {useSelector} from 'react-redux'
 import logo from '../images/logo.png'
 import HomeIcon from '@mui/icons-material/Home';
 import ExploreIcon from '@mui/icons-material/Explore';``
@@ -75,6 +76,8 @@ const Button =styled.button`
     cursor:pointer;
 `
 const Menu = ({ setDarkMode,darkMode }) => {
+
+  const  {currentUser} = useSelector(state =>state.user)
   return (
     <Container>
       <Wrapper>
@@ -84,18 +87,25 @@ const Menu = ({ setDarkMode,darkMode }) => {
             AKZ MEDIA
           </Logo>
         </Link>
-        <Item>
-          <HomeIcon/>
-          Home
-        </Item>
-        <Item>
-          <ExploreIcon/>
-          Explore
-        </Item>
-        <Item>
-          <SubscriptionsIcon/>
-          Subscriptions
-        </Item>
+        <Link  to='/' style={{textDecoration:'none',color:'inherit'}}>
+          <Item >
+            <HomeIcon/>
+            Home
+          </Item>
+        </Link>
+        <Link  to='/trend' style={{textDecoration:'none',color:'inherit'}}>
+            <Item>
+              <ExploreIcon/>
+              Explore
+            </Item>
+        </Link>
+        <Link  to='/subscribes' style={{textDecoration:'none',color:'inherit'}}>
+          <Item>
+            <SubscriptionsIcon/>
+            Subscriptions
+          </Item>
+        </Link>
+
         <Hr />
         <Item>
           <LibraryBooksIcon/>
@@ -105,14 +115,19 @@ const Menu = ({ setDarkMode,darkMode }) => {
           <HistoryIcon/>
           History
         </Item>
-        <Hr />
-        <Login >
-            Login in to like videos,comment, and subscribe
-          <Link to='login' style={{textDecoration:'none'}}>
-            <Button><PersonIcon /> SIGN IN</Button>
-          </Link>
-        </Login>
-        <Hr />
+        {
+          !currentUser &&
+          <>
+            <Hr />
+              <Login >
+                  Login in to like videos,comment, and subscribe
+                <Link to='login' style={{textDecoration:'none'}}>
+                  <Button><PersonIcon /> SIGN IN</Button>
+                </Link>
+              </Login>
+              <Hr />
+          </>
+        }
         <Item>
           <LibraryMusicIcon/>
           Music

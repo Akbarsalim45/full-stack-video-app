@@ -84,6 +84,7 @@ export const trendVideos = async (req,res,next) => {
 
 
 export const randomVideos = async (req,res,next) => {
+    console.log(req.headers)
     try{
         const videos  = await Video.aggregate( [{ $sample: {size: 40}}])
         res.status(200).json(videos)
