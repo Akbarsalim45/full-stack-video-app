@@ -84,7 +84,6 @@ export const trendVideos = async (req,res,next) => {
 
 
 export const randomVideos = async (req,res,next) => {
-    console.log(req.headers)
     try{
         const videos  = await Video.aggregate( [{ $sample: {size: 40}}])
         res.status(200).json(videos)
@@ -94,7 +93,8 @@ export const randomVideos = async (req,res,next) => {
 } 
 
 
-export const subChnVideos = async (req,res,next) => { 
+export const subChnVideos = async (req,res,next) => {
+    
     try{
     const user = await User.findById(req.user.id)
     const subscribedChannels = user.subscribedUsers
@@ -110,8 +110,7 @@ export const subChnVideos = async (req,res,next) => {
 }
 
 export const tags = async (req,res,next) => {
-    const tags = req.query.tags.split(',')
-    console.log(tags)
+    const tags = req.query?.tags.split(',')
     try{
         const videos  = await Video.find( {tag: {$in: tags}}).limit(20)
         res.status(200).json(videos)
@@ -121,7 +120,7 @@ export const tags = async (req,res,next) => {
 } 
 
 export const search = async (req,res,next) => {
-    const query = req.query.q
+    const query = req.query?.q
     try{
         const videos  = await Video.find({ title :{ $regex :query, $options: "i"}}).limit(20)
         res.status(200).json(videos)

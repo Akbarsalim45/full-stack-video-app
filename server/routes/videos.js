@@ -10,7 +10,7 @@ router.get('/find/:id',getVideo)
 router.get('/view/:id',viewVideo)
 router.get('/trend',trendVideos)
 router.get('/random',randomVideos)
-router.get('/sub',subChnVideos)
+router.get('/sub',verifyToken,subChnVideos)
 router.get('/tags',tags)
 router.get('/search',search)
 

@@ -62,21 +62,19 @@ const Card = ({type,video}) => {
             const fetchChanel= async()=>{
                 const {data} = await Axios.get(`users/${video?.userId}`)
                 setChannel(data)
-                console.log(data)
             }
             fetchChanel()
         }catch(e){
-            console.log(e)
         }
         
       },[video?.userId])
   return (
     <Container type= {type}>
         <Link to={`/video/${video?._id}`}>
-            <Img src={thumbnail} type= {type} />
+            <Img src={video?.imgUrl || channelImage} type= {type} />
         </Link>
         <Details type= {type}>
-            <ChannelImg src={channelImage} type={type} />
+            <ChannelImg src={channel?.img} type={type} />
             <Text>
                 <Title>{video?.title}</Title>
                 <ChannelName>{channel?.name}</ChannelName>

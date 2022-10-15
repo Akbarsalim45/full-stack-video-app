@@ -15,7 +15,6 @@ export const userSlice = createSlice({
         },
 
         loginSuccess:(state,action)=>{
-            console.log('actioon',action.payload)
             state.loading=false
             state.currentUser=action.payload 
         },
@@ -30,7 +29,6 @@ export const userSlice = createSlice({
         },
 
         subscribe:(state,action)=>{
-          console.log(action)
           if(action.payload.type == 'subscribe'){
             state.currentUser.subscribedUsers.push(action.payload.id)
           }else{

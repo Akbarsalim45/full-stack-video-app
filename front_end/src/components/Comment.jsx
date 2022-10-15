@@ -41,7 +41,6 @@ const Comment = ({comment}) => {
     
         const fetchData=async()=>{
             const {data} = await Axios.get(`/users/${comment?.userId}`)
-            console.log("comemtttt",data)
             setCommentUser(data)
         }
         fetchData()

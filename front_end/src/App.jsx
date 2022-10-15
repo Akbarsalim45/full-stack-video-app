@@ -22,6 +22,9 @@ const Wrapper =styled.div`
 
 function App() {
 
+  const [videos,setVideos] =useState([])
+
+
     const [darkMode,setDarkMode] =useState(true)
     return(
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme} >
@@ -29,13 +32,13 @@ function App() {
         <BrowserRouter>
           <Menu setDarkMode={setDarkMode} darkMode={darkMode} />
           <Main>
-            <Navbar />
+            <Navbar darkMode={darkMode} {...{videos,setVideos}}/>
             <Wrapper>
                 <Routes>
                   <Route path="/" >
-                    <Route index element={ <Home type='random' /> } />
-                    <Route path="trend" element={ <Home type ="trend" /> } />
-                    <Route path="subscribes" element={ <Home type= "sub" /> } />
+                    <Route index element={ <Home type='random' {...{videos,setVideos}} /> } />
+                    <Route path="trend" element={ <Home type ="trend" {...{videos,setVideos}} /> } />
+                    <Route path="subscribes" element={ <Home type= "sub" {...{videos,setVideos}} /> } />
                     <Route path='login' element={ <Login /> } />
                     <Route path='video' >
                       <Route path=":id"  element={ <Video /> } />

@@ -24,7 +24,6 @@ export const videoSlice = createSlice({
             state.error=true
         },
         likeVideo:(state,action)=>{
-            console.log(action.payload)
             if(!state.videoDetails.likes.includes(action.payload)){
                 state.videoDetails.likes.push(action.payload)
                 state.videoDetails.dislikes.splice(state.videoDetails.dislikes.findIndex(userId => userId == action.payload),1)

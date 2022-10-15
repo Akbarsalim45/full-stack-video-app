@@ -10,15 +10,13 @@ const Container =styled.div`
 `
 
 
-const Home = ({type}) => {
+const Home = ({type,videos,setVideos}) => {
 
-  const [videos,setVideos] =useState([])
-
+  
   useEffect(()=>{
     const fetchVideos= async()=>{
       const {data} = await Axios.get(`videos/${type}`)
       setVideos(data)
-      console.log(data)
     }
     fetchVideos()
   },[type])
@@ -26,23 +24,14 @@ const Home = ({type}) => {
   return (
    <Container>
     {
+      videos.length ?
       videos.map( video => {
 
         return <Card  key={video?._id} video={video} />
-      })
+      }) :
+        <h2 style={{textAlign:'center'}}>No videos found</h2>
     }
-        {/* <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card /> */}
+      
    </Container>
   )
 }

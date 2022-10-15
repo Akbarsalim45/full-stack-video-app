@@ -3,10 +3,12 @@ import styled from 'styled-components'
 import PersonIcon from '@mui/icons-material/Person';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
+import LogoutIcon from '@mui/icons-material/Logout';
 import  {Link} from 'react-router-dom'
-import {useSelector} from 'react-redux'
+import {useSelector,useDispatch} from 'react-redux'
 import Upload from './Upload';
-
+import {Axios} from '../axios/axios'
+import { logout } from '../redux/userSlice';
 const Container = styled.div`
     position:sticky;
     top:0;
@@ -59,22 +61,45 @@ const Button =styled.button`
       gap:10px;
       cursor:pointer;
 `
-const Navbar = () => {
+const Navbar = ({darkMode,videos,setVideos}) => {
 
     const {currentUser} = useSelector( state=> state.user)
+    const dispatch= useDispatch()
     const [open,setOpen] =useState(false)
+    const [query,setQuery] =useState('')
+    const handleSearch =async(e)=>{
+      if(e.key =="Enter"){
+        if(query){
+         const  {data}= await Axios.get(`videos/search?q=${query}`)
+         setVideos(data)
+        }
+      }
+    }
+  const handleLogout= ()=>{
+    dispatch(logout())
+  }
   return (
     <>
-    <Container>
+    <Container onKeyPress={handleSearch}>
       <Wrapper>
         <Search>
-          <Input placeholder="search" />
+          <Input placeholder="search" onChange = {e => setQuery(e.target.value)} />
           <SearchOutlinedIcon />
         </Search>
-        <VideoCallIcon onClick={()=>setOpen(true)} />
-        <Link to='login' style={{textDecoration:'none'}}>
-          <Button ><PersonIcon /> {currentUser?.name}</Button>
-        </Link>
+        {currentUser?.name
+          ? 
+          <>
+          <VideoCallIcon onClick={()=>setOpen(true)} style={{marginRight:'10px',color:darkMode?'white':"black"}} />
+            <Button ><PersonIcon /> {currentUser?.name}</Button>
+            <Link to='login'>
+              <Button onClick={handleLogout} ><LogoutIcon /></Button>
+            </Link>
+          </>
+          :
+          <Link to='login' style={{textDecoration:'none'}}>
+             <Button ><PersonIcon />Login</Button>
+          </Link>
+        }
       </Wrapper>
     </Container>
     {

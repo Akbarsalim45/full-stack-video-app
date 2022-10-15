@@ -73,11 +73,9 @@ const Login = () => {
       dispatch(loginSuccess(data))
       localStorage.setItem('access-token',data.token)
       navigate('/')
-      console.log(data)
 
     }catch(e){
       dispatch(loginFail())
-      console.log(e)
     }
   }
 

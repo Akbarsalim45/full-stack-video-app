@@ -7,7 +7,7 @@ import ThumbDownOutlinedIcon from '@mui/icons-material/ThumbDownOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import channelImage from '../images/avathar.jpg'
-import {Comments,Card}from '../components'
+import {Comments,Card ,Recommendation}from '../components'
 import {useParams} from 'react-router-dom'
 import {Axios } from '../axios/axios'
 import {useSelector,useDispatch} from 'react-redux'
@@ -64,9 +64,9 @@ const Hr =styled.hr`
     margin:15px 0;
     border:0.5px solid ${({theme}) => theme.soft }
 `
-const Recommendation= styled.div`
-    flex:2;
-`
+// const Recommendation= styled.div`
+//     flex:2;
+// `
 const Channel =styled.div`
     display:flex;
     justify-content:space-between;
@@ -110,12 +110,15 @@ const Subscribe = styled.button`
     height:max-content;
     padding:10px 20px;
 `
+const VideoPlayer=styled.video`
+    width:100%;
+    height:550px
+`
 const Video = () => {
     const {id} = useParams()
     const dispatch  =useDispatch()
     const {videoDetails} = useSelector(state =>state.video)
     const {currentUser} = useSelector(state =>state.user)
-    console.log("currentUser",currentUser)
     const [channel,setChannel] = useState({})
 
     useEffect(()=>{
@@ -129,11 +132,9 @@ const Video = () => {
                 setChannel(channelDetail)
                 const {data:comments} = await Axios.get(`/comments/${data?._id}`)
                 dispatch(fetchComment(comments))
-                console.log('comments',comments)
             }
             fetchVideo()
         }catch(e){
-            console.log(e)
             dispatch(getVideoFail())
         }
         
@@ -163,7 +164,6 @@ const Video = () => {
             }
         }
         catch(e){
-            console.log(e)
         }
 
     }
@@ -173,14 +173,14 @@ const Video = () => {
     <Container>
         <Content>
             <VideoWrapper>
-                <iframe width="100%" height="720" src="https://www.youtube.com/embed/FHTbsZEJspU" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                <VideoPlayer src={videoDetails.videoUrl} controls />
             </VideoWrapper>
             <Title>{videoDetails?.title}</Title>
             <Details>
                 <Info>{videoDetails?.views} views - {format(videoDetails?.createdAt)}</Info>
                 <Buttons>
-                    <Button onClick={handleLike} >{videoDetails.likes.includes(currentUser._id) ?<ThumbUpIcon/> :<ThumbUpAltOutlinedIcon />} {videoDetails?.likes?.length}</Button>
-                    <Button onClick={handleDislike}>{videoDetails.dislikes.includes(currentUser._id) ?<ThumbDownIcon/> :<ThumbDownOutlinedIcon />} Dislike</Button>
+                    <Button onClick={handleLike} >{videoDetails?.likes.includes(currentUser._id) ?<ThumbUpIcon/> :<ThumbUpAltOutlinedIcon />} {videoDetails?.likes?.length}</Button>
+                    <Button onClick={handleDislike}>{videoDetails?.dislikes.includes(currentUser._id) ?<ThumbDownIcon/> :<ThumbDownOutlinedIcon />} Dislike</Button>
                     <Button><ReplyOutlinedIcon /> Share</Button>
                     <Button><BookmarkBorderOutlinedIcon /> Save</Button>
                 </Buttons>
@@ -188,7 +188,7 @@ const Video = () => {
             <Hr />
             <Channel>
                 <ChannelInfo>
-                    <ChannelImage src={channelImage}  />
+                    <ChannelImage src={channel.img}  />
                     <ChannelDetail>
                         <ChannelName>{channel?.name}</ChannelName>
                         <ChannelCounter>{channel?.subscribers} subscribers</ChannelCounter>
@@ -200,6 +200,7 @@ const Video = () => {
             <Hr />
             <Comments currentUser={currentUser} videoDetails={videoDetails} />
         </Content>
+        <Recommendation videoDetails={videoDetails} />
         {/* <Recommendation>
             <Card type='sm' />
             <Card type='sm' />

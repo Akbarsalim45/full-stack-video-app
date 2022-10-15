@@ -35,7 +35,6 @@ const Comments = ({currentUser,videoDetails}) => {
   const [comment,setComment] = useState('')
   const dispatch = useDispatch()
   const handleAddComment = async(e)=>{
-    console.log(e.key)
     if(e.key == "Enter"){
       await Axios.post(`comments`,{userId:currentUser._id , videoId:videoDetails._id,desc:comment})
       dispatch(addComment({userId:currentUser._id , videoId:videoDetails._id,desc:comment}))
