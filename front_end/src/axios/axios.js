@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // const BASE_URL = "http://localhost:8000/api/"
-const BASE_URL = "https://akzmedia.herokuapp.com/api/"
+const BASE_URL = "https://react-video-app-new.onrender.com/api/"
 
 export const Axios = axios.create({
     withCredentials: true,
