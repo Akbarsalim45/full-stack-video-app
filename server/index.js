@@ -17,7 +17,11 @@ const connect = () =>{
         .catch(err => {throw err})
 }
 
-app.use(cors());
+app.use(cors({
+    origin: "https://wonderful-sopapillas-40774c.netlify.app",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials:true
+  }));
  app.use(cookieParser())
  app.use(express.json())
  app.use("/api/auth",authRoutes)
