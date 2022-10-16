@@ -1,7 +1,9 @@
 import styled from 'styled-components'
+import {Link} from 'react-router-dom'
+import {useSelector} from 'react-redux'
 import logo from '../images/logo.png'
 import HomeIcon from '@mui/icons-material/Home';
-import ExploreIcon from '@mui/icons-material/Explore';
+import ExploreIcon from '@mui/icons-material/Explore';``
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import HistoryIcon from '@mui/icons-material/History';
@@ -20,10 +22,15 @@ import PersonIcon from '@mui/icons-material/Person';
 const Container = styled.div`
     flex:1;
     font-size:14px;
-    height:100%
-    ;
-    color:white;
-    background-color:#202020;
+    height:100vh ;
+    color:${({theme})=>theme.text};
+    background-color:${({theme})=>theme.bgLighter};
+    position:sticky;
+    top:0;
+    overflow:auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
 `
 const Wrapper =styled.div`
     padding:18px 26px
@@ -45,10 +52,14 @@ const Item =styled.div`
     gap:20px;
     cursor:pointer;
     padding:7px 0px;
+
+    &:hover{
+        background-color:${({theme})=>theme.soft};
+       }
 `   
 const Hr =styled.hr`
     margin:15px 0px;
-    border:0.5px solid #373737
+    border:0.5px solid ${({theme})=>theme.soft};
 `
 const Login =styled.div``
 const Button =styled.button`
@@ -64,26 +75,38 @@ const Button =styled.button`
     gap:10px;
     cursor:pointer;
 `
-const Menu = () => {
+const Menu = ({ setDarkMode,darkMode }) => {
+
+  const  {currentUser} = useSelector(state =>state.user)
   return (
     <Container>
       <Wrapper>
-        <Logo>
-          <Img src={logo} />
-          AKZ MEDIA
-        </Logo>
-        <Item>
-          <HomeIcon/>
-          Home
-        </Item>
-        <Item>
-          <ExploreIcon/>
-          Explore
-        </Item>
-        <Item>
-          <SubscriptionsIcon/>
-          Subscriptions
-        </Item>
+        <Link to='/' style={{textDecoration:'none',color:'inherit'}}>
+          <Logo>
+            <Img src={logo} />
+            AKZ MEDIA
+          </Logo>
+        </Link>
+        <Link  to='/' style={{textDecoration:'none',color:'inherit'}}>
+          <Item >
+            <HomeIcon/>
+            Home
+          </Item>
+        </Link>
+        <Link  to='/trend' style={{textDecoration:'none',color:'inherit'}}>
+            <Item>
+              <ExploreIcon/>
+              Explore
+            </Item>
+        </Link>
+       {currentUser && 
+       <Link  to='/subscribes' style={{textDecoration:'none',color:'inherit'}}>
+          <Item>
+            <SubscriptionsIcon/>
+            Subscriptions
+          </Item>
+        </Link>}
+
         <Hr />
         <Item>
           <LibraryBooksIcon/>
@@ -93,12 +116,19 @@ const Menu = () => {
           <HistoryIcon/>
           History
         </Item>
-        <Hr />
-        <Login >
-            Login in to like videos,comment, and subscribe
-          <Button><PersonIcon /> SIGN IN</Button>
-        </Login>
-        <Hr />
+        {
+          !currentUser &&
+          <>
+            <Hr />
+              <Login >
+                  Login in to like videos,comment, and subscribe
+                <Link to='login' style={{textDecoration:'none'}}>
+                  <Button><PersonIcon /> SIGN IN</Button>
+                </Link>
+              </Login>
+              <Hr />
+          </>
+        }
         <Item>
           <LibraryMusicIcon/>
           Music
@@ -136,9 +166,9 @@ const Menu = () => {
           <HelpCenterOutlinedIcon/>
           Help
         </Item>
-        <Item>
+        <Item onClick={()=>setDarkMode(prev => !prev) }>
           <LightModeOutlinedIcon/>
-          Light Mode
+          {darkMode? "Dark":"Light"} Mode
         </Item>
 
       </Wrapper>
