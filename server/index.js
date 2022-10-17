@@ -18,7 +18,7 @@ const connect = () =>{
 }
 
 app.use(cors({
-    origin: "https://wonderful-sopapillas-40774c.netlify.app",
+    origin: ["https://wonderful-sopapillas-40774c.netlify.app",'http://127.0.0.1:5173'],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials:true
   }));

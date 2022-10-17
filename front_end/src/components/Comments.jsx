@@ -27,6 +27,8 @@ const Input = styled.input`
     outline:none;
     padding:5px;
     width:100%;
+    color:${({theme})=> theme.text};
+
 `
 
 const Comments = ({currentUser,videoDetails}) => {
@@ -43,10 +45,10 @@ const Comments = ({currentUser,videoDetails}) => {
   }
   return (
     <Container>
-        <NewComment onKeyDown={handleAddComment}>
+        {currentUser && <NewComment onKeyDown={handleAddComment}>
             <Avatar src={avatar} />
             <Input placeholder='Add a comment...' onChange={e => setComment(e.target.value)} value={comment}  /> 
-        </NewComment>
+        </NewComment>}
         {
           comments.map( com => <Comment key={com._id} comment={com} />)
         }

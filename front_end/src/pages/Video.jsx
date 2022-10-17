@@ -16,6 +16,7 @@ import { subscribe} from '../redux/userSlice';
 import { fetchComment} from '../redux/commentSlice';
 import {format} from 'timeago.js'
 import videoSlice from '../redux/videoSlice';
+import {useNavigate} from 'react-router-dom'
 const Container =styled.div`
     display:flex;
     gap:24px;
@@ -120,7 +121,7 @@ const Video = () => {
     const {videoDetails} = useSelector(state =>state.video)
     const {currentUser} = useSelector(state =>state.user)
     const [channel,setChannel] = useState({})
-
+    const navigate = useNavigate()
     useEffect(()=>{
         
         dispatch(getVideoStart())
@@ -141,15 +142,24 @@ const Video = () => {
       },[id])
 
     const handleLike = async()=>{
+        if(!currentUser){
+            navigate('/login')
+        }
         await Axios.put(`users/like/${videoDetails?._id}`)
         dispatch(likeVideo(currentUser?._id))
     }
     const handleDislike = async()=>{
+        if(!currentUser){
+            navigate('/login')
+        }
         await Axios.put(`users/dislike/${videoDetails?._id}`)
         dispatch(dislikeVideo(currentUser?._id))
     }
 
     const handleSubscribe = async()=>{
+        if(!currentUser){
+            navigate('/login')
+        }
         try{
             if(!currentUser?.subscribedUsers.includes(channel?._id) ){
     
@@ -173,14 +183,14 @@ const Video = () => {
     <Container>
         <Content>
             <VideoWrapper>
-                <VideoPlayer src={videoDetails.videoUrl} controls />
+                <VideoPlayer src={videoDetails?.videoUrl} controls />
             </VideoWrapper>
             <Title>{videoDetails?.title}</Title>
             <Details>
                 <Info>{videoDetails?.views} views - {format(videoDetails?.createdAt)}</Info>
                 <Buttons>
-                    <Button onClick={handleLike} >{videoDetails?.likes.includes(currentUser._id) ?<ThumbUpIcon/> :<ThumbUpAltOutlinedIcon />} {videoDetails?.likes?.length}</Button>
-                    <Button onClick={handleDislike}>{videoDetails?.dislikes.includes(currentUser._id) ?<ThumbDownIcon/> :<ThumbDownOutlinedIcon />} Dislike</Button>
+                    <Button onClick={handleLike} >{videoDetails?.likes?.includes(currentUser?._id) ?<ThumbUpIcon/> :<ThumbUpAltOutlinedIcon />} {videoDetails?.likes?.length}</Button>
+                    <Button onClick={handleDislike}>{videoDetails?.dislikes?.includes(currentUser?._id) ?<ThumbDownIcon/> :<ThumbDownOutlinedIcon />} Dislike</Button>
                     <Button><ReplyOutlinedIcon /> Share</Button>
                     <Button><BookmarkBorderOutlinedIcon /> Save</Button>
                 </Buttons>
@@ -195,7 +205,7 @@ const Video = () => {
                         <Description>{videoDetails?.desc}</Description>
                     </ChannelDetail>
                 </ChannelInfo>
-                <Subscribe onClick={handleSubscribe}>{currentUser?.subscribedUsers.includes(channel?._id)? 'Subscribed':"Subscribe"}</Subscribe>
+                <Subscribe onClick={handleSubscribe}>{currentUser?.subscribedUsers?.includes(channel?._id)? 'Subscribed':"Subscribe"}</Subscribe>
             </Channel>
             <Hr />
             <Comments currentUser={currentUser} videoDetails={videoDetails} />

@@ -84,7 +84,7 @@ const Navbar = ({darkMode,videos,setVideos}) => {
       <Wrapper>
         <Search>
           <Input placeholder="search" onChange = {e => setQuery(e.target.value)} />
-          <SearchOutlinedIcon />
+          <SearchOutlinedIcon style={{color:darkMode?"white":"dark"}} />
         </Search>
         {currentUser?.name
           ? 

@@ -7,7 +7,7 @@ import {format} from 'timeago.js'
 import {Axios} from '../axios/axios'
 
 const Container=styled.div`
-        width:${props => props.type !=='sm' && '360px'};
+        width:${props => props.type !='sm' && '260px'};
         margin-bottom:${(props) => props.type === 'sm' ?'10px':'45px'};
         cursor:pointer;
         display:${(props) => props.type === 'sm' && 'flex'};
@@ -17,7 +17,7 @@ const Container=styled.div`
 
 const Img=styled.img`
         width:100%;
-        height:${(props) => props.type === 'sm' ?'120px': '202px'};
+        height:${(props) => props.type === 'sm' ?'120px': '180px'};
         background-color:#999;
         flex:1;
 
@@ -71,10 +71,10 @@ const Card = ({type,video}) => {
   return (
     <Container type= {type}>
         <Link to={`/video/${video?._id}`}>
-            <Img src={video?.imgUrl || channelImage} type= {type} />
+            <Img src={video?.imgUrl || thumbnail} type= {type} />
         </Link>
         <Details type= {type}>
-            <ChannelImg src={channel?.img} type={type} />
+            <ChannelImg src={channel?.img || channelImage} type={type} />
             <Text>
                 <Title>{video?.title}</Title>
                 <ChannelName>{channel?.name}</ChannelName>

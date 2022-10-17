@@ -143,18 +143,21 @@ const handleUpload = (file,urlType)=>{
         res.status==200 && navigate(`video/${res.data._id}`)
         reset()
     }
+    console.log(video)
   return (
     <Container>
         <Wrapper>
             <Close onClick={()=>setOpen(false) }>X</Close>
             <Title>Upload a New Video</Title>
             <Label>Video:</Label>
-            {videoperc>0 ?"Uploading"+ videoperc.toFixed()+"%":<Input type="file" accept="video/*" onChange = {e => setVideo(e.target.files[0])} />}
+            {videoperc ==100 &&<p>{video?.name || "NA" }</p>}
+            {videoperc >0 ?"Uploading"+ videoperc.toFixed()+"%":<Input type="file"  accept="video/*" onChange = {e => setVideo(e.target.files[0])} />}
             <Input type="text" placeholder="Title" name='title' onChange={handleChange} />
             <Desc placeholder="Desciption" name='desc' rows={8}onChange={handleChange} />
             <Input type="text" name="tags" placeholder="Seprate tags with commas" onChange={e=> setTags(e.target.value.split(','))}/>
             <Label>Image:</Label>
-            {imgperc>0?"uploading"+ imgperc.toFixed()+"%" :<Input type="file"  accept="image/*" onChange = {e => setImage(e.target.files[0])} />}
+            {imgperc ==100 &&<p>{image?.name || "NA" }</p>}
+            {imgperc>0 && imgperc != 100?"uploading"+ imgperc.toFixed()+"%" :<Input type="file"   accept="image/*" onChange = {e => setImage(e.target.files[0])} />}
             <Button onClick= {handleSumbit}>Upload</Button>
 
         </Wrapper>
