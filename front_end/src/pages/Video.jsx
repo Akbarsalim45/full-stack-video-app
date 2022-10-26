@@ -17,6 +17,7 @@ import { fetchComment} from '../redux/commentSlice';
 import {format} from 'timeago.js'
 import videoSlice from '../redux/videoSlice';
 import {useNavigate} from 'react-router-dom'
+import { useMediaQuery } from 'react-responsive';
 const Container =styled.div`
     display:flex;
     gap:24px;
@@ -42,6 +43,11 @@ const Details =styled.div`
     align-items:center;
     justify-content:space-between;
 
+    @media only screen and (min-width:320px){
+        justify-content:center;
+    }
+
+
 `
 
 const Info=styled.span`
@@ -51,7 +57,11 @@ const Info=styled.span`
 const Buttons=styled.div`
     display:flex;
     gap:20px;
-    color:${({theme}) => theme.text}
+    color:${({theme}) => theme.text};
+    @media only screen and (min-width:320px){
+        margin-top:10px;
+        gap:40px;
+    }
 `
 
 const Button=styled.div`
@@ -110,12 +120,22 @@ const Subscribe = styled.button`
     cursor:pointer;
     height:max-content;
     padding:10px 20px;
+
+    @media only screen and (min-width:320px){
+        padding:5px 10px;
+        font-size:  12px;
+    }
 `
 const VideoPlayer=styled.video`
     width:100%;
-    height:550px
+    height:550px;
+
+    @media only screen and (min-width:320px){
+      height:240px;
+    }
 `
 const Video = () => {
+    const isLaptop = useMediaQuery({ query: '(min-width: 950px)' })
     const {id} = useParams()
     const dispatch  =useDispatch()
     const {videoDetails} = useSelector(state =>state.video)
@@ -186,8 +206,9 @@ const Video = () => {
                 <VideoPlayer src={videoDetails?.videoUrl} controls />
             </VideoWrapper>
             <Title>{videoDetails?.title}</Title>
+            { !isLaptop && <Info>{videoDetails?.views} views - {format(videoDetails?.createdAt)}</Info>}
             <Details>
-                <Info>{videoDetails?.views} views - {format(videoDetails?.createdAt)}</Info>
+              { isLaptop && <Info>{videoDetails?.views} views - {format(videoDetails?.createdAt)}</Info>}
                 <Buttons>
                     <Button onClick={handleLike} >{videoDetails?.likes?.includes(currentUser?._id) ?<ThumbUpIcon/> :<ThumbUpAltOutlinedIcon />} {videoDetails?.likes?.length}</Button>
                     <Button onClick={handleDislike}>{videoDetails?.dislikes?.includes(currentUser?._id) ?<ThumbDownIcon/> :<ThumbDownOutlinedIcon />} Dislike</Button>
@@ -210,7 +231,7 @@ const Video = () => {
             <Hr />
             <Comments currentUser={currentUser} videoDetails={videoDetails} />
         </Content>
-        <Recommendation videoDetails={videoDetails} />
+        {isLaptop && <Recommendation videoDetails={videoDetails} />}
         {/* <Recommendation>
             <Card type='sm' />
             <Card type='sm' />

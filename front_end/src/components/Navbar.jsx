@@ -9,6 +9,7 @@ import {useSelector,useDispatch} from 'react-redux'
 import Upload from './Upload';
 import {Axios} from '../axios/axios'
 import { logout } from '../redux/userSlice';
+import { useMediaQuery } from 'react-responsive'
 const Container = styled.div`
     position:sticky;
     top:0;
@@ -23,6 +24,10 @@ const Wrapper =styled.div`
     padding:10px 20px;
     justify-content:flex-end;
     position:relative;
+    @media only screen and (min-width:320px){
+      display:flex;
+      gap :5px;
+    }
 `
 
 const Input =styled.input`
@@ -46,6 +51,11 @@ const Search =styled.div`
     padding:5px;
     border:1px solid #ccc;
     border-radius:3px;
+    @media only screen and (min-width:380px){
+      display:flex;
+      margin-left:25px;
+      width:55%;
+    }
 
 `
 
@@ -60,8 +70,14 @@ const Button =styled.button`
       align-items:center;
       gap:10px;
       cursor:pointer;
+
+      @media only screen and (min-width:320px){
+        padding:5px;
+    }
 `
 const Navbar = ({darkMode,videos,setVideos}) => {
+
+    const isLaptop = useMediaQuery({ query: '(min-width:950px)' })
 
     const {currentUser} = useSelector( state=> state.user)
     const dispatch= useDispatch()
@@ -90,14 +106,14 @@ const Navbar = ({darkMode,videos,setVideos}) => {
           ? 
           <>
           <VideoCallIcon onClick={()=>setOpen(true)} style={{marginRight:'10px',color:darkMode?'white':"black"}} />
-            <Button ><PersonIcon /> {currentUser?.name}</Button>
+            <Button ><PersonIcon /> {isLaptop &&  currentUser?.name}</Button>
             <Link to='login'>
               <Button onClick={handleLogout} ><LogoutIcon /></Button>
             </Link>
           </>
           :
           <Link to='login' style={{textDecoration:'none'}}>
-             <Button ><PersonIcon />Login</Button>
+             <Button ><PersonIcon />{isLaptop && Login}</Button>
           </Link>
         }
       </Wrapper>

@@ -6,6 +6,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Home from './pages/Home';
 import Video from './pages/Video';
 import Login from './components/Login'
+import MediaQuery from 'react-responsive'
 
 const Container =styled.div`
         display:flex
@@ -30,7 +31,9 @@ function App() {
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme} >
       <Container>
         <BrowserRouter>
+        <MediaQuery minWidth={950}>
           <Menu setDarkMode={setDarkMode} darkMode={darkMode} />
+        </MediaQuery>
           <Main>
             <Navbar darkMode={darkMode} {...{videos,setVideos}}/>
             <Wrapper>

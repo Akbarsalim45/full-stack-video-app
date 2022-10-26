@@ -12,6 +12,10 @@ const Container=styled.div`
         cursor:pointer;
         display:${(props) => props.type === 'sm' && 'flex'};
         gap: 10px;
+
+        @media only screen and (min-width:320px){
+        width:345px;
+    }
        
 `
 

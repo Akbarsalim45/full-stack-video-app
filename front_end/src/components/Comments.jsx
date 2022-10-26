@@ -7,6 +7,10 @@ import {Axios} from '../axios/axios'
 import { addComment } from '../redux/commentSlice'
 const Container = styled.div`
 
+  @media only screen and (min-width:320px){
+        min-height:100px;
+        overflow: scroll;
+    }
 `
 const NewComment = styled.div`
     display: flex;
@@ -18,6 +22,10 @@ const Avatar = styled.img`
     width: 50px;
     height: 50px;
     border-radius:50%;
+    @media only screen and (min-width:320px){
+      width: 30px;
+     height: 30px;
+    }
 `
 
 const Input = styled.input`

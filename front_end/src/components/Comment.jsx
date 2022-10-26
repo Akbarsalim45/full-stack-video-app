@@ -7,11 +7,16 @@ const Container = styled.div`
     display:flex;
     gap: 10px;
     margin: 30px 0px;
+    
 `
 const Avatar = styled.img`
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    @media only screen and (min-width:320px){
+      width: 30px;
+     height: 30px;
+    }
 `
 const Details = styled.div`
     display:flex;
@@ -52,7 +57,7 @@ const Comment = ({comment}) => {
         <Avatar src={avatar} />
         <Details>
             <Name>{commentUser?.name}<Date>{format(comment?.createdAt)}</Date> </Name>
-            <Text>{comment.desc}</Text>
+            <Text>{comment?.desc}</Text>
         </Details>
     </Container>
   )
